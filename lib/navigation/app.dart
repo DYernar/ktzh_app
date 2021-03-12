@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ktzh_app/features/main_page/ui/pages/main_page.dart';
+import 'package:ktzh_app/views/main_page.dart';
+import 'package:ktzh_app/views/product_page.dart';
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -17,10 +18,14 @@ class _AppState extends State<App> {
         designSize: Size(1080, 2340),
         allowFontScaling: true,
         builder: () => MaterialApp(
+          routes: {
+            '/': (BuildContext context) => MainPage(),
+            '/product_page': (BuildContext context) => ProductPage()
+          },
+          initialRoute: '/',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: MainPage(),
         ),
       ),
     );
