@@ -14,11 +14,9 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: ScreenUtilInit(
-        designSize: Size(360, 690),
-        allowFontScaling: false,
+        designSize: Size(1080, 2340),
+        allowFontScaling: true,
         builder: () => MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter_ScreenUtil',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
