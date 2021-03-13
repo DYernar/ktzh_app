@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ktzh_app/util/util.dart';
 
 TextStyle dateStyle = TextStyle(
   color: Colors.grey,
@@ -23,66 +22,75 @@ Widget productDetails() {
           color: Colors.black,
           width: ScreenUtil().setHeight(260.0),
         ),
-        SizedBox(height: 15,),
-            Text("ID:201873297", style: TextStyle(
-                fontSize: 35,
-                color: Colors.black
-            ),),
-        SizedBox(height: 10,),
-
+        SizedBox(
+          height: 15,
+        ),
+        Text(
+          "ID:201873297",
+          style: TextStyle(fontSize: 35, color: Colors.black),
+        ),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text("Название:", style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-            ),),
-            Text("Уголь", style: TextStyle(
-                fontSize: 20,
-                color: Colors.black
-            ),),
+            Text(
+              "Название:",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            ),
+            Text(
+              "Уголь",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text("Вес:", style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-            ),),
-            Text("2000кг", style: TextStyle(
-                fontSize: 20,
-                color: Colors.black
-            ),),
+            Text(
+              "Вес:",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            ),
+            Text(
+              "2000кг",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text("Заказчик:", style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey
-            ),),
-            Text("Қадірбек", style: TextStyle(
-                fontSize: 20,
-                color: Colors.black
-            ),),
+            Text(
+              "Заказчик:",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            ),
+            Text(
+              "Қадірбек",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
           ],
         ),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text("Станция отправления:", style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-            ),),
-            Text("Алматы-1", style: TextStyle(
-                fontSize: 20,
-                color: Colors.black
-            ),),
+            Text(
+              "Станция отправления:",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            ),
+            Text(
+              "Алматы-1",
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
           ],
         )
       ],
@@ -90,13 +98,11 @@ Widget productDetails() {
   );
 }
 
-
 Widget orderTimeLine() {
   return Container(
     decoration: BoxDecoration(color: Colors.white),
-    margin: EdgeInsets.only(
-      bottom: 3//SizeConfig.safeBlockHorizontal * 3,
-    ),
+    margin: EdgeInsets.only(bottom: 3 //SizeConfig.safeBlockHorizontal * 3,
+        ),
     padding: EdgeInsets.only(
       top: 5, //SizeConfig.safeBlockHorizontal * 3,
       left: 20, //SizeConfig.safeBlockHorizontal * 7,
@@ -114,7 +120,8 @@ Widget orderTimeLine() {
   );
 }
 
-Widget timelineRow(String title, String subTile, String comingDate, String leavingDate) {
+Widget timelineRow(
+    String title, String subTile, String comingDate, String leavingDate) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
@@ -153,7 +160,8 @@ Widget timelineRow(String title, String subTile, String comingDate, String leavi
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Станция: ${title}\n'
+            Text(
+                'Станция: ${title}\n'
                 'Прибытие: ${comingDate}\n'
                 'Отправление: ${leavingDate}\n'
                 'Опоздание: ${subTile}',
@@ -167,7 +175,9 @@ Widget timelineRow(String title, String subTile, String comingDate, String leavi
     ],
   );
 }
-Widget timelineLastRow(String title, String subTile, String comingDate, String leavingDate) {
+
+Widget timelineLastRow(
+    String title, String subTile, String comingDate, String leavingDate) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[

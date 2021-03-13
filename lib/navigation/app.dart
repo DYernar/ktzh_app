@@ -135,8 +135,25 @@ class _AppState extends State<App> {
             debugShowCheckedModeBanner: false,
             routes: {
               '/': (BuildContext context) => MainPage(),
-              '/product_page': (BuildContext context) => ProductPage(),
               '/profile_page': (BuildContext context) => ProfilePage(),
+            },
+            onGenerateRoute: (settings) {
+              List args = settings.arguments;
+              if (settings.name == '/product_page') {
+                return MaterialPageRoute(
+                  builder: (context) {
+                    return ProductPage(
+                      product: args[0],
+                    );
+                  },
+                );
+              }
+
+              return MaterialPageRoute(
+                builder: (context) {
+                  return Scaffold();
+                },
+              );
             },
             initialRoute: '/product_page',
             theme: ThemeData(

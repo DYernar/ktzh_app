@@ -86,7 +86,14 @@ class _MainPageState extends State<MainPage> {
               SizedBox(height: ScreenUtil().setHeight(40.0)),
               Container(),
             ] +
-            products.map((e) => productCard(e)).toList(),
+            products
+                .map((e) => InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/product_page',
+                          arguments: [e]);
+                    },
+                    child: productCard(e)))
+                .toList(),
       ),
     ));
   }
