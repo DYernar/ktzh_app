@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "602964897397",
+    "project_id": "ktzh-notification",
+    "storage_bucket": "ktzh-notification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602964897397:android:070e87fd02a92ad738923c",
+        "android_client_info": {
+          "package_name": "com.example.ktzh_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602964897397-a23sgtho1dh4hsendu3ar485bscm11p4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnZxCVdPEXUpfXp2Pe_869Rg-VQFYx7dQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602964897397-a23sgtho1dh4hsendu3ar485bscm11p4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
