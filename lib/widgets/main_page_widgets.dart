@@ -119,6 +119,7 @@ Widget productCard() {
       ),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         fromToWidget(),
         Row(
@@ -166,6 +167,7 @@ Widget fromToWidget() {
 Widget titles() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Text('тип товара', style: dateStyle),
       Text('трек номер', style: dateStyle),
@@ -176,6 +178,7 @@ Widget titles() {
 
 Widget values(String status) {
   return Column(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text('айран', style: dateStyle),
