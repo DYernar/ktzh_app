@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 String getDate(String date) {
   var lst = date.split("T");
   if (lst.length == 2) {
@@ -64,4 +66,21 @@ String getMonth(int m) {
       return "";
       break;
   }
+}
+
+Color getColorByDelay(int delay) {
+  if (delay == 0) return Colors.green;
+  return Colors.orange[400];
+}
+
+Map<String, dynamic> parseMsg(var obj) {
+  print(obj);
+  return {
+    "id": obj["shipping"]["id"],
+    "tracking_number": obj['shipping']['tracking_number'],
+    "delay": obj['updatedRoute']['delay'],
+    "station_name": obj['updatedRoute']['station_name'],
+    "time_arrival": obj['updatedRoute']['timeArrival'],
+    'status': obj["updatedRoute"]['status'],
+  };
 }

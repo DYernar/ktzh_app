@@ -22,6 +22,7 @@ dependencies:
   flutter_local_notifications: ^4.0.1+2
   vibration: ^1.7.3
   http: ^0.12.2
+  timeline_tile: ^1.0.0
 
 dev_dependencies:
   flutter_test:

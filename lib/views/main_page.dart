@@ -34,6 +34,11 @@ class _MainPageState extends State<MainPage> {
     _appBloc.add(SearchProductEvent(hintString));
   }
 
+  void navigateToProduct(Product p) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    Navigator.pushNamed(context, '/product_page', arguments: [p]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -87,10 +92,9 @@ class _MainPageState extends State<MainPage> {
               Container(),
             ] +
             products
-                .map((e) => InkWell(
+                .map((e) => GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/product_page',
-                          arguments: [e]);
+                      navigateToProduct(e);
                     },
                     child: productCard(e)))
                 .toList(),

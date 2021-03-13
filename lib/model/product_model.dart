@@ -62,29 +62,9 @@ class Product {
       height: ScreenUtil().setHeight(60.0),
     );
   }
-}
 
-SvgPicture getImageByStatus() {
-  String status = 'в пути';
-
-  if (status == "задержывается") {
-    return SvgPicture.asset(
-      'assets/images/delayed.svg',
-      color: Colors.orange,
-      width: ScreenUtil().setHeight(70.0),
-    );
-  } else if (status == "в пути") {
-    return SvgPicture.asset(
-      'assets/images/train.svg',
-      color: Colors.black,
-      width: ScreenUtil().setHeight(70.0),
-    );
-  } else {
-    return SvgPicture.asset(
-      'assets/images/delivered.svg',
-      color: Colors.green,
-      width: ScreenUtil().setHeight(70.0),
-    );
+  String getFirstStation() {
+    return routes[0].stationName;
   }
 }
 

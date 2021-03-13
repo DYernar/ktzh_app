@@ -112,7 +112,7 @@ Widget productCard(Product product) {
       color: Colors.white,
       border: Border.all(
         width: ScreenUtil().setHeight(2),
-        color: Colors.grey,
+        color: Colors.grey[400],
       ),
       borderRadius: BorderRadius.circular(
         ScreenUtil().setHeight(25),
