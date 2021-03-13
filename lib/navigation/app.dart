@@ -138,7 +138,7 @@ class _AppState extends State<App> {
               '/product_page': (BuildContext context) => ProductPage(),
               '/profile_page': (BuildContext context) => ProfilePage(),
             },
-            initialRoute: '/',
+            initialRoute: '/product_page',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
