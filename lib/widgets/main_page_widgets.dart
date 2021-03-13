@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ktzh_app/model/product_model.dart';
+import 'package:ktzh_app/util/util.dart';
 
 TextStyle dateStyle = TextStyle(
   color: Colors.grey,
@@ -13,7 +14,7 @@ TextStyle cityStyle = TextStyle(
   fontWeight: FontWeight.normal,
 );
 
-Widget searchBar(Function(String) onEdit, Function onSearch) {
+Widget searchBar(Function(String) onEdit) {
   return Container(
     height: ScreenUtil().setHeight(260.0),
     width: double.infinity,
@@ -30,49 +31,42 @@ Widget searchBar(Function(String) onEdit, Function onSearch) {
       ],
     ),
     child: Center(
-      child: Row(
-        children: [
-          Container(
-            width: ScreenUtil().setHeight(700.0),
-            height: ScreenUtil().setHeight(130.0),
-            padding:
-                EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(10.0)),
-            child: Theme(
-              data: new ThemeData(
-                primaryColor: Colors.white,
-                primaryColorDark: Colors.white,
+      child: Container(
+        width: double.infinity,
+        height: ScreenUtil().setHeight(130.0),
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(10.0)),
+        child: Theme(
+          data: new ThemeData(
+            primaryColor: Colors.white,
+            primaryColorDark: Colors.white,
+          ),
+          child: TextField(
+            onChanged: (val) {
+              onEdit(val);
+            },
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Color.fromRGBO(231, 231, 231, 1),
+              hintText: "Введите трек номер",
+              hintStyle: TextStyle(
+                color: Colors.grey,
+                fontSize: ScreenUtil().setSp(38.0),
               ),
-              child: TextField(
-                onChanged: (val) {
-                  onEdit(val);
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Color.fromRGBO(231, 231, 231, 1),
-                  hintText: "Введите трек номер",
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                    fontSize: ScreenUtil().setSp(38.0),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(
-                      ScreenUtil().setHeight(25.0),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(
-                      ScreenUtil().setHeight(25.0),
-                    ),
-                  ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setHeight(25.0),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(
+                  ScreenUtil().setHeight(25.0),
                 ),
               ),
             ),
           ),
-          SizedBox(width: ScreenUtil().setHeight(30.0)),
-          Expanded(child: customButton(onSearch)),
-        ],
+        ),
       ),
     ),
   );
@@ -128,26 +122,35 @@ Widget productCard(Product product) {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         fromToWidget(product),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            titles(),
-            values(product),
-          ],
-        )
+        line("трэк номер", product.trackingNumber),
+        status(product)
       ],
     ),
   );
 }
 
 Widget fromToWidget(Product product) {
+  String firstStation = "";
+  String lastStation = "";
+  int len = product.routes.length;
+
+  firstStation = product.routes[0].stationName;
+  lastStation = product.routes[0].stationName;
+
+  var deaprtureDate = getDate(product.routes[0].timeDeparture);
+  var departureTime = getTime(product.routes[0].timeDeparture);
+
+  var deliverDate = getDate(product.routes[len - 1].timeDeparture);
+  var deliverTime = getTime(product.routes[len - 1].timeDeparture);
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Column(
         children: [
-          Text('${product.path[0].departure}', style: dateStyle),
-          Text('${product.path[0].name}', style: cityStyle),
+          Text('$deaprtureDate $departureTime',
+              style: dateStyle.copyWith(fontSize: ScreenUtil().setSp(50.0))),
+          SizedBox(height: ScreenUtil().setHeight(20.0)),
+          Text('$firstStation', style: cityStyle),
         ],
       ),
       Column(
@@ -162,12 +165,45 @@ Widget fromToWidget(Product product) {
       ),
       Column(
         children: [
-          Text('${product.path[product.path.length - 1].arrival} ',
-              style: dateStyle),
-          Text('${product.path[product.path.length - 1].name}',
-              style: cityStyle),
+          Text('$deliverDate $deliverTime',
+              style: dateStyle.copyWith(fontSize: ScreenUtil().setSp(50.0))),
+          SizedBox(height: ScreenUtil().setHeight(20.0)),
+          Text('$lastStation', style: cityStyle),
         ],
       ),
+    ],
+  );
+}
+
+Widget status(Product product) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text('статус: ', style: dateStyle),
+      Container(
+        child: Row(
+          children: [
+            Text(product.getStatus(), style: dateStyle),
+            product.getImageByStatus(),
+          ],
+        ),
+      )
+    ],
+  );
+}
+
+Widget line(String title, String val) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        title,
+        style: dateStyle,
+      ),
+      Text(
+        val,
+        style: dateStyle,
+      )
     ],
   );
 }
@@ -177,7 +213,6 @@ Widget titles() {
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
-      Text('тип товара', style: dateStyle),
       Text('трек номер', style: dateStyle),
       Text('статус', style: dateStyle),
     ],
@@ -189,10 +224,9 @@ Widget values(Product product) {
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('${product.name}', style: dateStyle),
-      Text('${product.id}', style: dateStyle),
+      Text('${product.trackingNumber}', style: dateStyle),
       Container(
-        width: ScreenUtil().setHeight(450.0),
+        width: ScreenUtil().setHeight(300.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

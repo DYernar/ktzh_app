@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ktzh_app/views/main_page.dart';
 import 'package:ktzh_app/views/product_page.dart';
 import 'package:ktzh_app/views/profile_page.dart';
+import 'package:vibration/vibration.dart';
 
 class App extends StatefulWidget {
   App({Key key}) : super(key: key);
@@ -14,6 +15,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin notifiyer;
   @override
@@ -56,19 +59,59 @@ class _AppState extends State<App> {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       showNotification(message.notification.title, message.notification.body);
+      showSnackBar(message.notification.title, message.notification.body);
+      playVibration();
     });
+  }
+
+  void playVibration() async {
+    if (await Vibration.hasCustomVibrationsSupport()) {
+      Vibration.vibrate(duration: 500, amplitude: 50);
+    } else {
+      Vibration.vibrate();
+      await Future.delayed(Duration(milliseconds: 500));
+      Vibration.vibrate(amplitude: 50);
+    }
   }
 
   void showNotification(String title, String body) async {
     var androidDetails = AndroidNotificationDetails(
         'channelId', 'channelName', 'channelDescription');
-
     var iosDetails = IOSNotificationDetails();
-
     var details = NotificationDetails(android: androidDetails, iOS: iosDetails);
-
     await notifiyer.show(0, '$title', '$body', details,
         payload: 'Notification');
+  }
+
+  void showSnackBar(String title, String body) async {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        duration: Duration(seconds: 3),
+        backgroundColor: Color.fromRGBO(0, 148, 224, 1),
+        content: Container(
+            height: ScreenUtil().setHeight(150.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text(
+                  '$title',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: ScreenUtil().setSp(45.0),
+                  ),
+                ),
+                Text(
+                  '$body',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: ScreenUtil().setSp(35.0),
+                  ),
+                ),
+              ],
+            )),
+      ),
+    );
   }
 
   @override
@@ -79,6 +122,8 @@ class _AppState extends State<App> {
         designSize: Size(1080, 2340),
         allowFontScaling: true,
         builder: () => Scaffold(
+          resizeToAvoidBottomPadding: false,
+          key: _scaffoldKey,
           appBar: AppBar(
             backgroundColor: Colors.white,
             shadowColor: Colors.transparent,

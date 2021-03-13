@@ -30,13 +30,8 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  void onEdit(String hintString) {
-    hint = hintString;
-    setState(() {});
-  }
-
-  void onSearch() {
-    _appBloc.add(SearchProductEvent(hint));
+  void onSearch(String hintString) {
+    _appBloc.add(SearchProductEvent(hintString));
   }
 
   @override
@@ -52,7 +47,7 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             children: [
               SizedBox(height: ScreenUtil().setHeight(100.0)),
-              searchBar(onEdit, onSearch),
+              searchBar(onSearch),
               SizedBox(height: ScreenUtil().setHeight(15.0)),
               BlocConsumer<AppBloc, AppState>(
                 listener: (context, state) {},
@@ -68,7 +63,7 @@ class _MainPageState extends State<MainPage> {
                   }
 
                   if (state is FetchedProductsListState) {
-                    return state.products.length > 0
+                    return state.products == null || state.products.length > 0
                         ? productList(state.products)
                         : noProduct();
                   }
