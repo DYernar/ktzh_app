@@ -104,17 +104,17 @@ Widget orderTimeLine() {
     ),
     child: Column(
       children: <Widget>[
-        timelineRow("Алматы-1", "13 март, 22:05"),
-        timelineRow("Алматы-1", "13 март, 22:05"),
-        timelineRow("Алматы-1", "13 март, 22:05"),
-        timelineRow("Алматы-1", "13 март, 22:05"),
-        timelineLastRow("Алматы-1", "13 март, 22:05"),
+        timelineRow("Алматы-1", "Нет", "13 март, 22:05", "13 март, 22:05"),
+        timelineRow("Алматы-1", "Нет", "13 март, 22:05", "13 март, 22:05"),
+        timelineRow("Алматы-1", "Нет", "13 март, 22:05", "13 март, 22:05"),
+        timelineRow("Алматы-1", "Нет", "13 март, 22:05", "13 март, 22:05"),
+        timelineLastRow("Алматы-1", "Нет", "13 март, 22:05", "13 март, 22:05"),
       ],
     ),
   );
 }
 
-Widget timelineRow(String title, String subTile) {
+Widget timelineRow(String title, String subTile, String comingDate, String leavingDate) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
@@ -136,7 +136,7 @@ Widget timelineRow(String title, String subTile) {
             ),
             Container(
               width: 3,
-              height: 80,
+              height: 90,
               decoration: new BoxDecoration(
                 color: Colors.blue,
                 shape: BoxShape.rectangle,
@@ -153,7 +153,10 @@ Widget timelineRow(String title, String subTile) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('${title}\n ${subTile}',
+            Text('Станция: ${title}\n'
+                'Прибытие: ${comingDate}\n'
+                'Отправление: ${leavingDate}\n'
+                'Опоздание: ${subTile}',
                 style: TextStyle(
                     fontFamily: "regular",
                     fontSize: 14,
@@ -164,7 +167,7 @@ Widget timelineRow(String title, String subTile) {
     ],
   );
 }
-Widget timelineLastRow(String title, String subTile) {
+Widget timelineLastRow(String title, String subTile, String comingDate, String leavingDate) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
@@ -203,7 +206,7 @@ Widget timelineLastRow(String title, String subTile) {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('${title}\n ${subTile}',
+            Text('${title}\n ${subTile}\n ${comingDate}\n ${leavingDate}',
                 style: TextStyle(
                     fontFamily: "regular",
                     fontSize: 14,
