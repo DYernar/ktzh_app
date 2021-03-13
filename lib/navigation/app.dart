@@ -138,8 +138,8 @@ class _AppState extends State<App> {
               '/profile_page': (BuildContext context) => ProfilePage(),
             },
             onGenerateRoute: (settings) {
-              List args = settings.arguments;
               if (settings.name == '/product_page') {
+                List args = settings.arguments;
                 return MaterialPageRoute(
                   builder: (context) {
                     return ProductPage(
@@ -155,7 +155,7 @@ class _AppState extends State<App> {
                 },
               );
             },
-            initialRoute: '/product_page',
+            initialRoute: '/',
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
