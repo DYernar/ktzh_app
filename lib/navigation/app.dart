@@ -16,6 +16,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: Size(1080, 2340),
         allowFontScaling: true,

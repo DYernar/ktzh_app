@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:ktzh_app/util/util.dart';
+import 'package:ktzh_app/model/product_model.dart';
 
 TextStyle dateStyle = TextStyle(
   color: Colors.grey,
@@ -10,10 +9,11 @@ TextStyle dateStyle = TextStyle(
 
 TextStyle cityStyle = TextStyle(
   color: Colors.black,
-  fontSize: ScreenUtil().setSp(45.0),
+  fontSize: ScreenUtil().setSp(55.0),
+  fontWeight: FontWeight.normal,
 );
 
-Widget searchBar() {
+Widget searchBar(Function(String) onEdit, Function onSearch) {
   return Container(
     height: ScreenUtil().setHeight(260.0),
     width: double.infinity,
@@ -43,6 +43,9 @@ Widget searchBar() {
                 primaryColorDark: Colors.white,
               ),
               child: TextField(
+                onChanged: (val) {
+                  onEdit(val);
+                },
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Color.fromRGBO(231, 231, 231, 1),
@@ -68,41 +71,44 @@ Widget searchBar() {
             ),
           ),
           SizedBox(width: ScreenUtil().setHeight(30.0)),
-          Expanded(child: customButton()),
+          Expanded(child: customButton(onSearch)),
         ],
       ),
     ),
   );
 }
 
-Widget customButton() {
-  return Container(
-    width: double.infinity,
-    height: ScreenUtil().setHeight(115.0),
-    decoration: BoxDecoration(
-      color: Color.fromRGBO(176, 144, 35, 1),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black,
-          blurRadius: ScreenUtil().setHeight(2),
-        ),
-      ],
-      borderRadius: BorderRadius.circular(ScreenUtil().setHeight(15.0)),
-    ),
-    child: Center(
-      child: Text(
-        'поиск'.toUpperCase(),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: ScreenUtil().setSp(37.0),
-          fontWeight: FontWeight.normal,
+Widget customButton(Function onSearch) {
+  return InkWell(
+    onTap: onSearch,
+    child: Container(
+      width: double.infinity,
+      height: ScreenUtil().setHeight(115.0),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(176, 144, 35, 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: ScreenUtil().setHeight(2),
+          ),
+        ],
+        borderRadius: BorderRadius.circular(ScreenUtil().setHeight(15.0)),
+      ),
+      child: Center(
+        child: Text(
+          'поиск'.toUpperCase(),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: ScreenUtil().setSp(37.0),
+            fontWeight: FontWeight.normal,
+          ),
         ),
       ),
     ),
   );
 }
 
-Widget productCard() {
+Widget productCard(Product product) {
   return Container(
     margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(45.0)),
     padding: EdgeInsets.all(ScreenUtil().setHeight(40.0)),
@@ -121,12 +127,12 @@ Widget productCard() {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        fromToWidget(),
+        fromToWidget(product),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             titles(),
-            values("delivered"),
+            values(product),
           ],
         )
       ],
@@ -134,14 +140,14 @@ Widget productCard() {
   );
 }
 
-Widget fromToWidget() {
+Widget fromToWidget(Product product) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       Column(
         children: [
-          Text('13 March, 2021 ', style: dateStyle),
-          Text('Taraz', style: cityStyle),
+          Text('${product.path[0].departure}', style: dateStyle),
+          Text('${product.path[0].name}', style: cityStyle),
         ],
       ),
       Column(
@@ -156,8 +162,10 @@ Widget fromToWidget() {
       ),
       Column(
         children: [
-          Text('13 March, 2021 ', style: dateStyle),
-          Text('Nur-Sultan', style: cityStyle),
+          Text('${product.path[product.path.length - 1].arrival} ',
+              style: dateStyle),
+          Text('${product.path[product.path.length - 1].name}',
+              style: cityStyle),
         ],
       ),
     ],
@@ -176,22 +184,20 @@ Widget titles() {
   );
 }
 
-Widget values(String status) {
+Widget values(Product product) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('айран', style: dateStyle),
-      Text('SADV43DFG21', style: dateStyle),
+      Text('${product.name}', style: dateStyle),
+      Text('${product.id}', style: dateStyle),
       Container(
+        width: ScreenUtil().setHeight(450.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('${getStatus(status)}', style: dateStyle),
-            SvgPicture.asset(
-              'assets/images/${getImgByStatus(status)}.svg',
-              color: Colors.black,
-              width: ScreenUtil().setHeight(70.0),
-            )
+            Text('${product.getStatus()}', style: dateStyle),
+            product.getImageByStatus(),
           ],
         ),
       )
