@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ktzh_app/views/main_page.dart';
 import 'package:ktzh_app/views/product_page.dart';
 import 'package:ktzh_app/views/profile_page.dart';
@@ -19,9 +20,15 @@ class _AppState extends State<App> {
         designSize: Size(1080, 2340),
         allowFontScaling: true,
         builder: () => Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            shadowColor: Colors.transparent,
+            title: Image.asset('assets/images/ktzh.png'),
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
           drawer: drawer(),
           body: MaterialApp(
+            debugShowCheckedModeBanner: false,
             routes: {
               '/': (BuildContext context) => MainPage(),
               '/product_page': (BuildContext context) => ProductPage(),
@@ -43,15 +50,16 @@ class _AppState extends State<App> {
         children: [
           DrawerHeader(
             child: Container(
-              child: Image.asset('/assets/images/ktzh.svg'),
+              child: Image.asset(
+                'assets/images/ktzh.png',
+              ),
             ),
           ),
-          ListTile(title: Text('Profile')),
+          ListTile(title: Text('Мои товары')),
           Divider(thickness: ScreenUtil().setHeight(2)),
-          ListTile(title: Text('Profile')),
+          ListTile(title: Text('Профиль')),
           Divider(thickness: ScreenUtil().setHeight(2)),
-          ListTile(title: Text('Profile')),
-          Divider(thickness: ScreenUtil().setHeight(2)),
+          ListTile(title: Text('Задержанные товары')),
         ],
       ),
     );
