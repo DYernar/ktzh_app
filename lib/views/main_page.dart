@@ -31,13 +31,13 @@ class _MainPageState extends State<MainPage> {
   Widget productList() {
     return Expanded(
         child: SingleChildScrollView(
-      child: Column(
-        children: [
-              SizedBox(height: ScreenUtil().setHeight(40.0)),
-              Container(),
-            ] +
-            [1, 2, 3, 4, 5].map((e) => productCard()).toList(),
-      ),
+          child: Column(
+            children: [
+                  SizedBox(height: ScreenUtil().setHeight(40.0)),
+                  Container(),
+                ] +
+                [1, 2, 3, 4, 5].map((e) => productCard()).toList(),
+          ),
     ));
   }
 }

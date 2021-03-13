@@ -68,7 +68,8 @@ Widget searchBar() {
             ),
           ),
           SizedBox(width: ScreenUtil().setHeight(30.0)),
-          Expanded(child: customButton()),
+          Expanded(
+              child: customButton()),
         ],
       ),
     ),
