@@ -30,13 +30,13 @@ class _MainPageState extends State<MainPage> {
     super.dispose();
   }
 
-  void onEdit(String hintString) {
-    hint = hintString;
-    setState(() {});
+  void onSearch(String hintString) {
+    _appBloc.add(SearchProductEvent(hintString));
   }
 
-  void onSearch() {
-    _appBloc.add(SearchProductEvent(hint));
+  void navigateToProduct(Product p) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+    Navigator.pushNamed(context, '/product_page', arguments: [p]);
   }
 
   @override
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
           child: Column(
             children: [
               SizedBox(height: ScreenUtil().setHeight(100.0)),
-              searchBar(onEdit, onSearch),
+              searchBar(onSearch),
               SizedBox(height: ScreenUtil().setHeight(15.0)),
               BlocConsumer<AppBloc, AppState>(
                 listener: (context, state) {},
@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage> {
                   }
 
                   if (state is FetchedProductsListState) {
-                    return state.products.length > 0
+                    return state.products == null || state.products.length > 0
                         ? productList(state.products)
                         : noProduct();
                   }
@@ -91,7 +91,13 @@ class _MainPageState extends State<MainPage> {
               SizedBox(height: ScreenUtil().setHeight(40.0)),
               Container(),
             ] +
-            products.map((e) => productCard(e)).toList(),
+            products
+                .map((e) => GestureDetector(
+                    onTap: () {
+                      navigateToProduct(e);
+                    },
+                    child: productCard(e)))
+                .toList(),
       ),
     ));
   }

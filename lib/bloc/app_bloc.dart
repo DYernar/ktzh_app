@@ -24,8 +24,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event is SearchProductEvent) {
       yield LoadingState();
       var products = myProducts.where((element) {
-        return element.name.toLowerCase() == event.hint.toLowerCase() ||
-            element.id.toLowerCase().contains(event.hint.toLowerCase());
+        return element.trackingNumber
+            .toLowerCase()
+            .contains(event.hint.toLowerCase());
       }).toList();
 
       yield FetchedProductsListState(products);
