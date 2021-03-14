@@ -37,7 +37,7 @@ Widget productDetails(Product product) {
         ),
       ],
     ),
-    height: ScreenUtil().setHeight(830.0),
+    height: ScreenUtil().setHeight(900.0),
     child: Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(40.0)),
       child: Column(
@@ -113,12 +113,8 @@ Widget orderTimeLine(Product product) {
     if (i != product.routes.length - 1)
       timeline.add(placeHolderLine(product.routes, i, product.currnetRouteId));
   }
-  return Expanded(
-    child: SingleChildScrollView(
-      child: Column(
-        children: timeline,
-      ),
-    ),
+  return Column(
+    children: timeline,
   );
 }
 

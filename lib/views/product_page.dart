@@ -15,11 +15,13 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          productDetails(widget.product),
-          orderTimeLine(widget.product)
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            productDetails(widget.product),
+            orderTimeLine(widget.product)
+          ],
+        ),
       ),
     );
   }

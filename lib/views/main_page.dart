@@ -75,6 +75,26 @@ class _MainPageState extends State<MainPage> {
                               textAlign: TextAlign.center,
                             ),
                           ),
+                          InkWell(
+                            onTap: () {
+                              _appBloc.add(FetchProductsEvent());
+                            },
+                            child: Container(
+                              height: ScreenUtil().setHeight(150.0),
+                              width: ScreenUtil().setHeight(150.0),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                    ScreenUtil().setHeight(75),
+                                  ),
+                                  color: Colors.blue),
+                              child: Center(
+                                child: Icon(
+                                  Icons.replay,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );

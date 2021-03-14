@@ -10,7 +10,9 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(App());
+  runApp(MaterialApp(
+    home: App(),
+  ));
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

@@ -38,7 +38,8 @@ Widget profileData() {
                     Text('Mark Lawrence',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 25.0, fontWeight: FontWeight.bold)),
+                            fontSize: ScreenUtil().setSp(60.0),
+                            fontWeight: FontWeight.bold)),
                     Divider(
                       color: Colors.white,
                       height: ScreenUtil().setHeight(25.0),
@@ -47,7 +48,7 @@ Widget profileData() {
                     Text(
                       'mark.lawrence@nu.edu.kz',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 17.0),
+                      style: TextStyle(fontSize: ScreenUtil().setSp(45.0)),
                     ),
                     SizedBox(height: ScreenUtil().setHeight(13.0)),
                     SizedBox(
@@ -60,9 +61,13 @@ Widget profileData() {
                       ),
                     ),
                     SizedBox(height: ScreenUtil().setHeight(10.0)),
-                    Text('+7 789 123 4564',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 17.0)),
+                    Text(
+                      '+7 789 123 4564',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(45.0),
+                      ),
+                    ),
                     SizedBox(height: ScreenUtil().setHeight(13.0)),
                     SizedBox(
                       height: 1.0,
@@ -74,8 +79,12 @@ Widget profileData() {
                       ),
                     ),
                     SizedBox(height: ScreenUtil().setHeight(13.0)),
-                    Text('Nazarbayev University',
-                        style: TextStyle(fontSize: 17.0)),
+                    Text(
+                      'Nazarbayev University',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(45.0),
+                      ),
+                    ),
                     SizedBox(height: ScreenUtil().setHeight(13.0)),
                     SizedBox(
                       height: 1.0,

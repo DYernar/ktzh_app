@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -21,6 +22,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   static final navigatorKey = GlobalKey<NavigatorState>();
+  static final upperKey = GlobalKey<NavigatorState>();
+  bool received = false;
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   FlutterLocalNotificationsPlugin notifiyer;
@@ -136,6 +139,13 @@ class _AppState extends State<App> {
   }
 
   void showPopUp(String title, String body) {
+    if (received) {
+      Navigator.pop(context);
+    }
+    setState(() {
+      received = true;
+    });
+
     showDialog(
       context: _scaffoldKey.currentContext,
       child: AlertDialog(
@@ -182,16 +192,27 @@ class _AppState extends State<App> {
           ),
         ),
       ),
-    );
+    ).then((value) {
+      setState(() {
+        received = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, width: 1080, height: 2340, allowFontScaling: true);
+
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: ScreenUtilInit(
-          designSize: Size(1080, 2340),
-          builder: () => Scaffold(
+      navigatorKey: upperKey,
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder(
+        future: Firebase.initializeApp(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return errorPage();
+          }
+          return Scaffold(
             resizeToAvoidBottomPadding: false,
             key: _scaffoldKey,
             appBar: AppBar(
@@ -232,8 +253,25 @@ class _AppState extends State<App> {
                 primarySwatch: Colors.blue,
               ),
             ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget errorPage() {
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            height: ScreenUtil().setHeight(500.0),
+            child: Text(
+              "Ошибка",
+            ),
           ),
-        ));
+        ],
+      ),
+    );
   }
 
   Widget drawer() {
