@@ -135,7 +135,7 @@ Widget fromToWidget(Product product) {
   int len = product.routes.length;
 
   firstStation = product.routes[0].stationName;
-  lastStation = product.routes[0].stationName;
+  lastStation = product.routes[product.routes.length - 1].stationName;
 
   var deaprtureDate = getDate(product.routes[0].timeDeparture);
   var departureTime = getTime(product.routes[0].timeDeparture);
