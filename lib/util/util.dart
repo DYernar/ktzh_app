@@ -69,7 +69,7 @@ String getMonth(int m) {
 }
 
 Color getColorByDelay(int delay) {
-  if (delay == 0) return Colors.green;
+  if (delay == 0) return Colors.blueAccent;
   return Colors.orange[400];
 }
 

@@ -64,7 +64,20 @@ class _MainPageState extends State<MainPage> {
                   }
 
                   if (state is ErrorState) {
-                    return Center(child: Text(state.error));
+                    return Container(
+                      height: ScreenUtil().setHeight(400.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              state.error,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
                   }
 
                   if (state is FetchedProductsListState) {

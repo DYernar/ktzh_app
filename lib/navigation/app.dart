@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ktzh_app/util/util.dart';
 import 'package:ktzh_app/views/main_page.dart';
+import 'package:ktzh_app/views/map_page.dart';
 import 'package:ktzh_app/views/product_page.dart';
 import 'package:ktzh_app/views/profile_page.dart';
 import 'package:vibration/vibration.dart';
@@ -84,7 +85,7 @@ class _AppState extends State<App> {
       }
 
       showNotification(title, body);
-      showSnackBar(title, body);
+      showPopUp(title, body);
       playVibration();
     });
   }
@@ -115,51 +116,71 @@ class _AppState extends State<App> {
         duration: Duration(seconds: 5),
         backgroundColor: Colors.orange,
         content: Container(
-            height: ScreenUtil().setHeight(100.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  'Находится в разработке',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: ScreenUtil().setSp(45.0),
-                  ),
+          height: ScreenUtil().setHeight(100.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                'Находится в разработке',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ScreenUtil().setSp(45.0),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  void showSnackBar(String title, String body) async {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        duration: Duration(seconds: 3),
-        backgroundColor: Color.fromRGBO(0, 148, 224, 1),
+  void showPopUp(String title, String body) {
+    showDialog(
+      context: _scaffoldKey.currentContext,
+      child: AlertDialog(
+        backgroundColor: Colors.transparent,
         content: Container(
-            height: ScreenUtil().setHeight(150.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '$title',
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              ScreenUtil().setHeight(40.0),
+            ),
+          ),
+          height: ScreenUtil().setHeight(700.0),
+          width: ScreenUtil().setHeight(900.0),
+          padding: EdgeInsets.all(ScreenUtil().setHeight(20.0)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: Text(
+                  "$title",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: ScreenUtil().setSp(45.0),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: ScreenUtil().setSp(60.0),
                   ),
                 ),
-                Text(
-                  '$body',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: ScreenUtil().setSp(35.0),
-                  ),
+              ),
+              Icon(
+                Icons.delivery_dining,
+                size: ScreenUtil().setHeight(100.0),
+                color: Colors.green,
+              ),
+              Text(
+                "$body",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: ScreenUtil().setSp(45.0),
+                  fontWeight: FontWeight.normal,
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -186,6 +207,7 @@ class _AppState extends State<App> {
               routes: {
                 '/': (BuildContext context) => MainPage(),
                 '/profile_page': (BuildContext context) => ProfilePage(),
+                '/map_page': (BuildContext context) => MapPage(),
               },
               onGenerateRoute: (settings) {
                 if (settings.name == '/product_page') {
@@ -254,7 +276,11 @@ class _AppState extends State<App> {
           Divider(thickness: ScreenUtil().setHeight(2)),
           ListTile(
             title: Text('На карте'),
-            onTap: inProcess,
+            onTap: () {
+              _scaffoldKey.currentState.openEndDrawer();
+              navigatorKey.currentState.popUntil(ModalRoute.withName('/'));
+              navigatorKey.currentState.pushNamed('/map_page');
+            },
           ),
         ],
       ),

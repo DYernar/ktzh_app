@@ -1,1 +1,1 @@
-var BACKEND_URL = 'http://192.168.1.2';
+var BACKEND_URL = 'http://18.192.106.8';
