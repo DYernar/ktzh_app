@@ -65,6 +65,32 @@ class _AppState extends State<App> {
     notifiyer = FlutterLocalNotificationsPlugin();
     notifiyer.initialize(initSettings);
 
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      var msg = json.decode(message.notification.body);
+      var title = '';
+      var body = '';
+      var obj = parseMsg(msg);
+
+      if (obj['status'] == null)
+        return;
+      else if (obj['status'] == 'arrived') {
+        title = 'Посылка прибыла';
+        body =
+            'Ваша посылка с тэгом ${obj['tracking_number']} прибыла на станцию ${obj['station_name']}';
+      } else if (obj['status'] == 'late') {
+        title = 'Посылка прибыла';
+        body =
+            'Ваша посылка с тэгом ${obj['tracking_number']} прибыла на станцию ${obj['station_name']} с опазданием на ${(42690 / 3600).toStringAsFixed(1)} часов';
+      } else if (obj['status'] == 'scheduled') {
+        title = 'Посылка в пути';
+        body = 'Ваша посылка с тэгом ${obj['tracking_number']} в пути';
+      }
+
+      showNotification(title, body);
+      showPopUp(title, body);
+      playVibration();
+    });
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       // dfif
       var msg = json.decode(message.notification.body);
